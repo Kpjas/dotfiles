@@ -1,0 +1,178 @@
+set termguicolors
+" set background=dark
+" colorscheme NeoSolarized
+colorscheme onedark
+set gdefault
+if has('unnamedplus')
+    set clipboard=unnamed,unnamedplus
+endif
+
+set formatoptions+=j
+
+" let g:eleline_powerline_fonts = 1
+
+" augroup tmpl2html
+"     autocmd!
+"     autocmd BufRead,BufNewFile *.tmpl :set filetype=html
+"     let &makeprg="/home/kpjas/src/modern_business_pp/templates/przypoludnie.py"
+"     autocmd BufWritePost *.tmpl make
+" augroup END
+
+augroup follow_cd
+    autocmd!
+    autocmd BufEnter,BufRead,BufNewFile *  lcd %:p:h
+augroup END
+
+augroup html_settings
+    autocmd!
+    autocmd Filetype html setlocal tabstop=2 shiftwidth=2 expandtab
+augroup END
+
+augroup text_settings
+    autocmd!
+    autocmd Filetype text setlocal textwidth=120 wrap tabstop=4 softtabstop=4 shiftwidth=4 expandtab
+augroup END
+
+augroup python_settings
+    autocmd!
+    autocmd Filetype python setlocal foldmethod=indent foldlevel=99 expandtab textwidth=79 tabstop=4 shiftwidth=4 softtabstop=4
+augroup END
+
+nnoremap g= gg=G```
+nnoremap U <C-r>
+" nnoremap <silent> // :noh<CR>
+" nnoremap <silent><Esc><Esc> :nohlsearch<CR>
+
+nnoremap <F10> "=strftime("%Y-%m-%d")<CR>P
+inoremap <F11> <C-R>=strftime("%Y-%m-%d")<CR>
+
+" nnoremap <Space>P "+P
+" nnoremap <Space>p "+p
+vnoremap <Space>P "+P
+vnoremap <Space>d "+d
+vnoremap <Space>p "+p
+vnoremap <Space>y "+y
+
+nnoremap <silent> <C-S-i> :Autoformat<CR>
+" Move between horiz split windows maximizing them at the same time
+nnoremap <C-S-Down> <C-W>j<C-W>_
+nnoremap <C-S-Up> <C-W>k<C-W>_
+
+let g:UltiSnipsExpandTrigger='<tab>'
+let g:UltiSnipsJumpForwardTrigger='<tab>'
+let g:UltiSnipsJumpBackwardTrigger='<s-tab>'
+let g:UltiSnipsSnippetDirectories=['UltiSnips']
+
+if executable('rg')
+    " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+    set grepprg=rg\ --color=never
+
+    let g:ctrlp_use_caching = 0
+else
+    let g:ctrlp_user_command = 'find %s -not -path "*/\.*" -type f -exec grep -Iq . {} \; -and -print'
+endif
+
+" Switch CWD to the directory of the open buffer
+" map <Leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Close all the buffers
+map <Leader>ba :bufdo bd<cr>
+
+" move between buffers comfortably
+nnoremap <silent> <A-right> :bn<CR>
+nnoremap <silent> <A-left> :bp<CR>
+
+" Keep the cursor in place while joining lines
+nnoremap J mzJ`z
+
+nnoremap <Space> /
+nnoremap <C-Space> ?
+
+nnoremap <Space>- `.
+noremap <Leader>q :quit<CR>  " Quit current window :q
+noremap <Leader>Q :qa!<CR>   " Quit all windows    :Q
+"****************************************************
+" Insert mode convieniences
+"****************************************************
+inoremap zx <Esc>:update<CR>i
+inoremap jj <Esc>
+" open line above; move cursor there
+inoremap OO <Esc>O
+"line-wise ops
+inoremap CC <Esc>C
+inoremap SS <Esc>S
+" remove current line
+inoremap DD <Esc>ddi
+" undo
+inoremap UU <Esc>ui
+" Ctrl-a: Go to begin of line
+inoremap <C-a> <Home>
+" Ctrl-e: Go to end of line
+inoremap <C-e> <End>
+" redeem <C-e> = copy char from below
+inoremap <C-_> <C-e>
+
+nnoremap <C-q> :x<CR>
+inoremap <C-q> <ESC>:x<CR>
+nnoremap <C-s> :update<CR>
+inoremap <C-s> <ESC>:update<CR>
+
+" Get rid of command window
+map q: :q
+
+" Inserting blank lines
+nnoremap <CR> o<ESC>
+" nnoremap <BS> 1ko<ESC>
+
+" Complete whole lines with a quicker shortcut key in insert mode
+inoremap <C-L> <C-X><C-L>
+
+nnoremap <Leader>s :source ~/.vimmic/.vimrc.postconf<CR>
+nnoremap <Leader>e :e ~/.vimmic/.vimrc.postconf<CR>
+" mark jumps with line and column
+nnoremap ' `
+nnoremap ` '
+nnoremap <Space><Space> <C-^>
+nnoremap <NUL> :call quickmenu#bottom(0)<CR>
+
+" unmap bo konflikt w mapping w vimwiki
+unmap <Leader>wt
+" niech działa jak w vanilla vim-ie
+iunmap <C-o>
+
+" rm trailing whitespace
+nnoremap <silent> <Space>w mz:keepp %s/\\\@1<!\s\+$//e<cr>`z
+" nnoremap <silent> <F10> mz:keepp %s/\\\@1<!\s\+$//e<cr>`z
+" function! StripTrailingWhitespace()
+"     if !&binary && &filetype != 'diff'
+"         normal mz
+"         normal Hmy
+"         %s/\s\+$//e
+"         normal 'yz<CR>
+"         normal `z
+"     endif
+" endfunction
+" nnoremap <silent> <F10> :call StripTrailingWhitespace()<CR>
+" nnoremap <silent> <C-S-w> :call StripTrailingWhitespace()<CR>
+"
+"shorcut for replacing word under cursor with yanked word without overwriting yank buffer
+nnoremap <leader>p ciw<C-r>0<ESC>
+
+set guifont=Source\ Code\ Pro\ for\ Powerline\ 13
+
+set statusline=
+set statusline+=%(%{&buflisted?bufnr('%'):''}\ \ %)
+set statusline+=%< " Truncate line here
+set statusline+=%F\  " File path, as typed or relative to current directory
+set statusline+=%{&modified?'+\ ':''}
+set statusline+=%{&readonly?'\ ':''}
+set statusline+=%= " Separation point between left and right aligned items
+set statusline+=\ %{&filetype!=#''?&filetype:'none'}
+set statusline+=%(\ %{(&bomb\|\|&fileencoding!~#'^$\\\|utf-8'?'\ '.&fileencoding.(&bomb?'-bom':''):'')
+            \.(&fileformat!=#(has('win32')?'dos':'unix')?'\ '.&fileformat:'')}%)
+set statusline+=%(\ \ %{&modifiable?(&expandtab?'et\ ':'noet\ ').&shiftwidth:''}%)
+set statusline+=\ 
+set statusline+=\ %{&number?'':printf('%2d,',line('.'))} " Line number
+set statusline+=%-2v " Virtual column number
+set statusline+=\ %2p%% " Percentage through file in lines as in |CTRL-G|

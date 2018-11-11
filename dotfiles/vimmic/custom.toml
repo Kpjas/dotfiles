@@ -1,0 +1,48 @@
+# in this file you can add the plugins you want from github
+# using the following syntax:
+
+#[[plugins]]
+#repo = 'author/repo'
+#on_ft = ['ft1','ft2']
+#build = 'method'
+#if = 'condition'
+
+# more info in the dein-toml
+
+# example
+
+# [[plugins]]
+# repo = 'salsifis/vim-transpose'
+
+# colorschem used for true colors in the gallery
+# [[plugins]]
+# repo = 'iCyMind/NeoSolarized'
+
+[[plugins]]
+
+repo = 'joshdick/onedark.vim'
+
+[[plugins]]
+repo = 'vimwiki/vimwiki'
+#
+#[[plugins]]
+#repo = 'freeo/vim-kalisi'
+##
+# [[plugins]]
+# repo = 'kpjas/eleline.vim'
+
+# [[plugins]]
+# repo = 'andymass/vim-matchup'
+
+[[plugins]]
+repo = 'Chiel92/vim-autoformat'
+
+[[plugins]]
+repo = 'SirVer/ultisnips'
+
+# [[plugins]]
+# repo = 'chikamichi/mediawiki.vim'
+
+# Colorschem used for true colors in the gallery
+# [[plugins]]
+# repo = 'tyrannicaltoucan/vim-quantum'
